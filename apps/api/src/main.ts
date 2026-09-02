@@ -22,6 +22,9 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      transformOptions: {
+        enableImplicitConversion: true, // Enables implicit string-to-type conversion for query params
+      },
     }),
   );
 
@@ -53,7 +56,13 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      tryItOutEnabled: true, // Automatically opens input fields for parameters
+      displayRequestDuration: true,
+    },
+  });
 
   const port = process.env.PORT ?? 3001;
   await app.listen(port, '0.0.0.0');
