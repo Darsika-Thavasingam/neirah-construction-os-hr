@@ -3,7 +3,8 @@
  * Central frontend configuration
  */
 
-export const API_BASE_URL = 'http://localhost:3001/api/v1';
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api/v1';
 
 /** Matches DEMO_TENANT_ID in prisma/seed.ts */
 export const TENANT_ID =
