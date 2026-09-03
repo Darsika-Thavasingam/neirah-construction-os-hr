@@ -120,4 +120,21 @@ export class EmployeesController {
       dto,
     );
   }
+
+  @Delete(':employeeId/assignments/:assignmentId')
+  @ApiOperation({ summary: 'Delete a project assignment' })
+  @ApiParam({ name: 'employeeId', description: 'Employee UUID' })
+  @ApiParam({ name: 'assignmentId', description: 'Assignment UUID' })
+  @ApiQuery({ name: 'tenant_id', required: true, type: String, description: 'Tenant UUID' })
+  removeAssignment(
+    @Param('employeeId') employeeId: string,
+    @Param('assignmentId') assignmentId: string,
+    @Query('tenant_id') tenantId: string,
+  ) {
+    return this.employeesService.removeAssignment(
+      employeeId,
+      assignmentId,
+      tenantId,
+    );
+  }
 }

@@ -407,6 +407,38 @@ export class EmployeesService {
         };
     }
 
+    async removeAssignment(
+        employeeId: string,
+        assignmentId: string,
+        tenantId: string,
+    ) {
+        const assignment =
+            await this.prisma.employeeProjectAssignment.findFirst({
+                where: {
+                    id: assignmentId,
+                    employeeId,
+                    tenantId,
+                },
+            });
+
+        if (!assignment) {
+            throw new NotFoundException('Project assignment not found');
+        }
+
+        const deleted =
+            await this.prisma.employeeProjectAssignment.delete({
+                where: {
+                    id: assignmentId,
+                },
+            });
+
+        return {
+            success: true,
+            message: 'Project assignment deleted successfully',
+            data: deleted,
+        };
+    }
+
     private async validateRelations(
         tenantId: string,
         departmentId?: string,
